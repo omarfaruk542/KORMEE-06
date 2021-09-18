@@ -1,0 +1,3 @@
+update SysInfo.DatabaseInformation set DatabaseName = REPLACE(DatabaseName,'HRMS','HRMSTG')
+go
+select * from SysInfo.DatabaseInformation

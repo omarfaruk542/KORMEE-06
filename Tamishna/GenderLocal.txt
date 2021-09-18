@@ -1,0 +1,3 @@
+UPDATE SysInfo.VariableList SET CharTypeLocal = 'cyiæl' WHERE CharType = 'Male'
+UPDATE SysInfo.VariableList SET CharTypeLocal = 'gwnjv' WHERE CharType = 'Female'
+UPDATE SysInfo.VariableList SET CharTypeLocal = 'Ab¨vb¨' WHERE CharType = 'Other'

@@ -1,0 +1,1 @@
+update Employee.CustomControlConfigure set IsCommon=1, IsVisible=1 where ColumnName='Section Info'

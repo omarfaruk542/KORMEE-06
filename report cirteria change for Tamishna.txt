@@ -1,0 +1,17 @@
+select * from Reports.ReportSuiteField where ReportId = 3
+
+select * from Reports.ReportSuiteField A
+join Reports.ReportSuite B ON A.ReportId = B.ReportId
+where ParentId = 3 and a.ReportId = 53
+order by A.ReportId asc
+
+select * from Reports.ReportSuite where ParentId = 3 
+
+declare @ReportID INT  = 53
+insert into Reports.ReportSuiteField(ReportFieldId,ReportId,ValueField,LabelField,Label,DefaultValue,FieldType,MapField,IsSysParameter,ReferenceSource,Operators,FilterOnly,SeqNo,MultiSelect)
+select * from (
+select (SELECT max(ReportFieldId) FROM Reports.ReportSuiteField)+ROW_NUMBER()OVER(ORDER BY ValueField) as ReportFieldID,
+@ReportID as ReportID,ValueField,LabelField,Label,DefaultValue,FieldType,MapField,IsSysParameter,ReferenceSource,Operators,FilterOnly,SeqNo,MultiSelect 
+from Reports.ReportSuiteField where ReportId=50
+) A 
+where ValueField not in (select ValueField from Reports.ReportSuiteField where ReportId = @ReportID)

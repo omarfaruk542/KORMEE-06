@@ -1,0 +1,3 @@
+update Employee.EmployeePolicyTag set MaternityLeavePolicyID = 0
+where ESID in (select ESID from Reports.EmployeePIMSInfo where Gender = 'Male')
+and MaternityLeavePolicyID > 0

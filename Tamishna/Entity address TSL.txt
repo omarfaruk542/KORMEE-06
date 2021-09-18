@@ -1,0 +1,4 @@
+UPDATE [Organization].[EntityAddressInfo] SET AddressLocal = N'২৪৭, ভাদাম, নিশাতনগর, টঙ্গী, গাজীপুর-১৭১১, বাংলাদেশ',
+EntityNameLocal = N'তামিশনা সিনথেটিকস লিঃ'
+WHERE EntityName = 'Tamishna Synthetics Ltd.'
+

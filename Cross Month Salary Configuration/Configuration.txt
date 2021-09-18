@@ -1,0 +1,7 @@
+select * from SysInfo.YearInformationMaster
+GO
+Insert Into SysInfo.YearInformationMaster
+Select 4, 'Salary Year',26,1,'January',0,0,'Cross Month'
+Go
+update SysInfo.MenuInfo set IsActive = 1 where MenuName ='Year Grouping'
+

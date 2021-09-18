@@ -1,0 +1,8 @@
+select * from SecInfo.SecurityGroupMaster
+
+select * from SecInfo.SecurityRuleMaster
+select * from SecInfo.SecurityRuleMenuPrivilegeChild where MenuID in (4,5,6)
+
+select * from SysInfo.MenuInfo where MenuName like '%house%'
+
+select * from SecInfo.UserSecurityOverride where MenuID in (4,5,6)

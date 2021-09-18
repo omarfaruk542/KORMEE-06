@@ -1,0 +1,13 @@
+select * from Employee.EmployeeCurrentHkInfo
+
+select ESID,EmployeeCode INTo #tempData from Reports.EmployeePIMSInfo
+where EmployeeCode in 
+(
+90000568, 90000564, 90000507, 90000492, 90000513, 90000560,90000580,
+90000623, 90000512, 90000383, 90000629, 90000541, 90000374,90000581
+)
+
+update Employee.EmployeeCurrentHkInfo set Unit = 21100000370
+where ESID in (select ESID from #tempData)
+
+select * from Organization.HKChild  where HKMasterID = '21100000011'

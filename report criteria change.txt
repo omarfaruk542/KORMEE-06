@@ -1,0 +1,4 @@
+
+insert into Reports.ReportSuiteField(ReportFieldId,ReportId,ValueField,LabelField,Label,DefaultValue,FieldType,MapField,IsSysParameter,ReferenceSource,Operators,FilterOnly,SeqNo,MultiSelect)
+select (SELECT max(ReportFieldId) FROM Reports.ReportSuiteField)+ROW_NUMBER()OVER(ORDER BY ValueField),
+62,ValueField,LabelField,Label,DefaultValue,FieldType,MapField,IsSysParameter,ReferenceSource,Operators,FilterOnly,SeqNo,MultiSelect from Reports.ReportSuiteField where ReportId=50

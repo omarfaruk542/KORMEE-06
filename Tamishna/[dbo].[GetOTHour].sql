@@ -1,0 +1,9 @@
+
+create FUNCTION [dbo].[GetOTHour](@OTMinute INT)
+RETURNS DECIMAL(18,2)
+AS
+BEGIN
+	DECLARE @OTHour DECIMAL(18,2)
+	SET @OTHour = CAST((@OTMinute / 60) + (@OTMinute % 60) / 100.0 as DECIMAL(18,2))
+	RETURN @OTHour
+END

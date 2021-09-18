@@ -1,0 +1,30 @@
+SELECT SlabType,Duration,SequenceNo,ReportedSalaryHead,IsEffected,OTRate,CalculationHeadID INTO #OTSlab FROM [OverTime].[OverTimeSlab]
+
+DECLARE @SlabType VARCHAR(20),@Duration DECIMAL(18,2),@Seq DECIMAL(18,2),@ReportingHead BIGINT, @IsEffected BIT,
+@OTRate DECIMAL(18,2),@CalculationHead BIGINT
+
+DECLARE @ShiftID BIGINT
+DECLARE @SysID BIGINT
+
+DECLARE ShiftWiseOTSlabDefine CURSOR FOR 
+SELECT ShiftID FROM ShiftManagement.ShiftPlanMaster
+
+OPEN ShiftWiseOTSlabDefine
+FETCH NEXT FROM ShiftWiseOTSlabDefine INTO @ShiftID
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+SET @SysID = (SELECT MAX(SystemID) FROM OverTime.OverTimeSlab) + 1
+
+IF NOT EXISTS (SELECT * FROM OverTime.OverTimeSlab WHERE SystemID = @SysID)
+BEGIN
+INSERT INTO OverTime.OverTimeSlab
+SELECT @SysID+ROW_NUMBER()OVER(ORDER BY SlabType ASC),@ShiftID,* FROM #OTSlab A
+WHERE NOT EXISTS (SELECT * FROM OverTime.OverTimeSlab B WHERE B.ShiftSystemID = @ShiftID AND A.SlabType = B.SlabType)
+END
+
+FETCH NEXT FROM ShiftWiseOTSlabDefine INTO @ShiftID
+END
+CLOSE ShiftWiseOTSlabDefine
+DEALLOCATE ShiftWiseOTSlabDefine

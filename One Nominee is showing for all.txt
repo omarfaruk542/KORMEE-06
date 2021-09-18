@@ -1,0 +1,21 @@
+ALTER PROC [Employee].[spGetNomineeInformation]
+@ESID BIGINT
+AS
+BEGIN
+SELECT distinct N.[SystemID], N.[ESID], N.EntitlementID , N.[NomineeName], N.[PercentageOfShare],
+		N.[DOB], N.[FatherName], N.[MotherName], N.[SpouseName], N.[RelationShip], N.[NomineeAddress], N.[ContactNo], N.[NationalIDNo], 
+		N.[BirthRegistrationNo], N.[PassportNo],'Approved' ApprovalStatus
+		FROM Employee.NomineeInformation N
+		WHERE N.ESID = @ESID
+		
+UNION
+SELECT DISTINCT N.[SystemID], N.[ESID], E.EntitlementID , N.[NomineeName], N.[PercentageOfShare],
+		N.[DOB], N.[FatherName], N.[MotherName], N.[SpouseName], N.[RelationShip], N.[NomineeAddress], N.[ContactNo], N.[NationalIDNo], 
+		N.[BirthRegistrationNo], N.[PassportNo], S.StatusName ApprovalStatus
+		FROM Employee.NomineeInformationBack N
+		LEFT JOIN (SELECT EntitlementID , EntitlementName    FROM  SysInfo.EntitlementMaster WHERE HasNominee = 1)E
+			ON E.EntitlementID =N.EntitlementID
+		LEFT JOIN SysInfo.ApprovalStatus S ON N.ApprovalStatus=S.StatusValue 
+		 WHERE N.ESID =@ESID  and ApprovalStatus != 1 
+END
+

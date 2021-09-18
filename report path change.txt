@@ -1,0 +1,7 @@
+/****** Script for SelectTopNRows command from SSMS  ******/
+update [SecInfo].[SystemConfiguration] set CharType = 'C:\inetpub\wwwroot\KORMEEWEB'
+
+  where VariableType ='ReportRootPath'
+
+
+  select * from [SecInfo].[SystemConfiguration] where VariableType ='ReportRootPath'

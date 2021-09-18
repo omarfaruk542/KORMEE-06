@@ -1,0 +1,1 @@
+= Replace(CStr(Int( (Sum(Fields!OrgOTMinute.Value) / 60 ) ) + (Sum(Fields!OrgOTMinute.Value) mod 60 ) / 100),".",":")

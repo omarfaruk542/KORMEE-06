@@ -1,0 +1,6 @@
+select A.name as ColumnName,C.name+'.'+B.name as TableName,
+'SELECT * FROM '+C.name+'.'+B.name as Query
+from sys.columns A
+JOIN sys.objects B ON A.object_id  = B.object_id
+JOIN sys.schemas C ON B.schema_id = C.schema_id
+where B.type = 'U' AND A.name = 'Employeecode'

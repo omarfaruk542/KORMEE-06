@@ -1,0 +1,2 @@
+insert into Reports.ReportSuite
+SELECT (SELECT MAX(ReportId) + 1 FROM Reports.ReportSuite),1,4,'Monthly Leave Record','rptMonthlyLeaveRecord.rdl','ReportRepository\Leave\Monthly Leave Record\',null,2,1

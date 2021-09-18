@@ -1,0 +1,7 @@
+SELECT * FROM [SecInfo].[SystemConfiguration]
+SELECT * FROM [SysInfo].[VariableList]
+SELECT * FROM [Employee].[CustomControl]
+SELECT * FROM [Employee].[CustomControlConfigure]
+SELECT * FROM [Attendance].[AttendanceAutoProcessScheduleConfigure]
+SELECT * FROM [SysInfo].[AttendanceConfiguration]
+SELECT * FROM [SysInfo].[PayrollConfiguration]

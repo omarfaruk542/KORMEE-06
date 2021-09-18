@@ -1,0 +1,5 @@
+update Employee.ActiveEmployeeMaster set DOB = null
+where ESID in (select ESID from TempDOJBelow18)
+
+update Reports.EmployeePIMSInfo set DOB = null
+where ESID in (select ESID from TempDOJBelow18)

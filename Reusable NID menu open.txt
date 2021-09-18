@@ -1,0 +1,2 @@
+UPDATE SysInfo.MenuInfo SET IsActive = 1 WHERE MenuID = 353
+UPDATE SysInfo.MenuInfo SET IsActive = 1 WHERE MenuID = 354

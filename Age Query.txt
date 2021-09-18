@@ -1,0 +1,3 @@
+select EntityName,EmployeeCode,EmployeeName,Designation,[Section Info],[Line Info],Unit,DOJ,DOB,[SysInfo].[ftCalculateAge](DOB,GETDATE()) Age from Reports.EmployeePIMSInfo
+where EmployeeStatus = 'active' and left([SysInfo].[ftCalculateAge](DOB,GETDATE()),2) < 18
+order by dob desc

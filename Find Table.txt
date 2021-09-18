@@ -1,0 +1,5 @@
+select B.name as [Schema],A.Name as ObjectName,
+'SELECT * FROM ['+B.name+'].['+A.Name+']' as TableName
+from sys.tables A
+JOIN sys.schemas B ON A.schema_id = B.schema_id
+where A.name like '%menu%'

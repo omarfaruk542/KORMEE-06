@@ -1,0 +1,3 @@
+INSERT INTO Attendance.DeviceRawData(ESID,PunchCardNo,WorkDate,PTime,PunchType)
+select ESID,EmployeeCode,WorkDate,PTime,0 from DeviceRawDataUpload A
+JOIN Reports.EmployeePIMSInfo B On A.ID = B.EmployeeCode

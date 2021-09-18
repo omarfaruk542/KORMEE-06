@@ -1,0 +1,3 @@
+SELECT E.EmployeeCode,E.EmployeeName,B.EntitlementName,EffectiveDate FROM Reports.EmployeePIMSInfo E
+JOIN Employee.EntitlementInformation A ON E.ESID = A.ESID
+JOIN SysInfo.EntitlementMaster B ON A.EntitlementID = B.EntitlementID

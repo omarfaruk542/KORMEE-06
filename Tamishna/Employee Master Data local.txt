@@ -1,0 +1,5 @@
+ CREATE VIEW EmployeeMasterDataLocal
+   AS
+   SELECT A.HKMasterID,HKMasterName,B.HKEntryID,HKEntryName,C.HKLocalName FROM [Organization].[HKMaster] A
+   JOIN [Organization].[HKChild] B ON A.HKMasterID = B.HKMasterID
+   LEFT JOIN  [Organization].[HKChildLocal] C ON B.HKEntryID = C.HKChildID

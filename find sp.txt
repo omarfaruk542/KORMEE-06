@@ -1,0 +1,3 @@
+select B.name as SchemaName,A.name as ProcName,B.name+'.'+A.name as Procedures from sys.procedures A
+join sys.schemas B ON A.schema_id = B.schema_id
+ where A.name like '%attendanceprocess%'

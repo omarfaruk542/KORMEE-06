@@ -1,0 +1,55 @@
+DECLARE @ReportID INT = 101
+DECLARE @ReportFieldID INT = 0
+
+
+DELETE FROM Reports.ReportSuiteField WHERE ReportId = @ReportID
+
+DECLARE @ValueField VARCHAR(50),@LabelField VARCHAR(50),@Label VARCHAR(50),@DefaultValue VARCHAR(50),@FieldType VARCHAR(50),@MapField VARCHAR(50),
+@IsSysParameter INT,@ReferenceSource VARCHAR(150),@Operator VARCHAR(50),@FilterOnly INT,@SeqNo INT,@MultiSelect INT
+
+
+DECLARE ReportFieldInsert CURSOR FOR
+SELECT * FROM 
+(
+SELECT 'EntityName' as ValueField,'EntityName' as LabelField,'EntityName' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct EntityName From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,1 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'Unit' as ValueField,'Unit' as LabelField,'Unit' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct Unit From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,2 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'Department' as ValueField,'Department' as LabelField,'Department' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct Department From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,3 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'SectionInfo' as ValueField,'SectionInfo' as LabelField,'SectionInfo' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct [Section Info] as SectionInfo From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,4 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'LineInfo' as ValueField,'LineInfo' as LabelField,'LineInfo' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct [Line Info] as LineInfo From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,5 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'DesignationGroup' as ValueField,'DesignationGroup' as LabelField,'DesignationGroup' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct [Designation Group] as DesignationGroup From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,6 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'GradeInfo' as ValueField,'GradeInfo' as LabelField,'GradeInfo' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct [Grade Info] as GradeInfo From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,7 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'EmployeeCategory' as ValueField,'EmployeeCategory' as LabelField,'EmployeeCategory' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct [Employee Category] as EmployeeCategory From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,8 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'ShiftType' as ValueField,'ShiftType' as LabelField,'ShiftType' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct ShiftType FROM Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,9 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'EmployeeCode' as ValueField,'EmployeeCode' as LabelField,'EmployeeCode' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct EmployeeCode FROM Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,10 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'MenuID' as ValueField,'MenuID' as LabelField,'MenuID' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,1 as IsSysParameter,NULL as ReferenceSource,NULL as Operator,0 as FilterOnly,11 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'UserID' as ValueField,'UserID' as LabelField,'UserID' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,1 as IsSysParameter,NULL as ReferenceSource,NULL as Operator,0 as FilterOnly,12 as SeqNo,1 as MultiSelect
+) A 
+ORDER BY SeqNo ASC
+
+OPEN ReportFieldInsert
+FETCH NEXT FROM ReportFieldInsert INTO @ValueField,@LabelField,@Label,@DefaultValue,@FieldType,@MapField,
+@IsSysParameter,@ReferenceSource,@Operator,@FilterOnly,@SeqNo,@MultiSelect
+WHILE @@FETCH_STATUS = 0 
+BEGIN 
+
+SET @ReportFieldID = (SELECT MAX(ReportFieldId) FROM Reports.ReportSuiteField) + 1
+
+INSERT INTO Reports.ReportSuiteField
+SELECT @ReportFieldID,@ReportID,@ValueField,@LabelField,@Label,@DefaultValue,@FieldType,@MapField,@IsSysParameter,@ReferenceSource,@Operator,@FilterOnly,@SeqNo,@MultiSelect
+
+FETCH NEXT FROM ReportFieldInsert INTO @ValueField,@LabelField,@Label,@DefaultValue,@FieldType,@MapField,
+@IsSysParameter,@ReferenceSource,@Operator,@FilterOnly,@SeqNo,@MultiSelect
+END
+CLOSE ReportFieldInsert
+DEALLOCATE ReportFieldInsert
