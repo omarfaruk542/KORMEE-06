@@ -1,0 +1,23 @@
+DECLARE @AppID INT, @ParentID INT,@DisplayName VARCHAR(250),@ReportName VARCHAR(250),@ReportPath VARCHAR(250),@ConName VARCHAR(50),@Seq INT, @IsVisible INT
+DECLARE @ReportID INT
+
+DECLARE ReportPathAdd CURSOR FOR
+select * from [dbo].[ReportPath$]
+
+OPEN ReportPathAdd
+FETCH NEXT FROM ReportPathAdd INTO @AppID,@ParentID,@DisplayName,@ReportName,@ReportPath,@ConName,@Seq,@IsVisible
+WHILE @@FETCH_STATUS = 0
+BEGIN 
+
+SET @ReportID = (SELECT MAX(ReportId) + 1 FROM Reports.ReportSuite)
+
+IF NOT EXISTS (SELECT * FROM Reports.ReportSuite WHERE DisplayName = @DisplayName)
+BEGIN
+INSERT INTO Reports.ReportSuite
+SELECT @ReportID,@AppID,@ParentID,@DisplayName,@ReportName,@ReportPath,@ConName,@Seq,@IsVisible
+END
+
+FETCH NEXT FROM ReportPathAdd INTO @AppID,@ParentID,@DisplayName,@ReportName,@ReportPath,@ConName,@Seq,@IsVisible
+END
+CLOSE ReportPathAdd
+DEALLOCATE ReportPathAdd

@@ -1,0 +1,1 @@
+UPDATE SecInfo.SystemConfiguration set CharType = 0 WHERE VariableType = 'IsApprovedSelfAttendance'

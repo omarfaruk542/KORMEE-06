@@ -1,0 +1,1 @@
+update sysinfo.menuinfo set IsActive = 1 where menuname ='ReuseBankAccountInformation'
