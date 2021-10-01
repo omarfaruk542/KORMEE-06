@@ -1,0 +1,1 @@
+select * from PayRoll.SalaryProcessVerificationInformation where IsLocked = 1 and IsSalaryApproved = 0

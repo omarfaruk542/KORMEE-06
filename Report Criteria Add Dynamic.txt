@@ -27,13 +27,15 @@ SELECT 'GradeInfo' as ValueField,'GradeInfo' as LabelField,'GradeInfo' as Label,
 UNION 
 SELECT 'EmployeeCategory' as ValueField,'EmployeeCategory' as LabelField,'EmployeeCategory' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct [Employee Category] as EmployeeCategory From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,8 as SeqNo,1 as MultiSelect
 UNION 
-SELECT 'ShiftType' as ValueField,'ShiftType' as LabelField,'ShiftType' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct ShiftType FROM Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,9 as SeqNo,1 as MultiSelect
+SELECT 'EmployeeStatus' as ValueField,'EmployeeStatus' as LabelField,'EmployeeStatus' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct EmployeeStatus From Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,9 as SeqNo,1 as MultiSelect
 UNION 
-SELECT 'EmployeeCode' as ValueField,'EmployeeCode' as LabelField,'EmployeeCode' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct EmployeeCode FROM Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,10 as SeqNo,1 as MultiSelect
+SELECT 'ShiftType' as ValueField,'ShiftType' as LabelField,'ShiftType' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct ShiftType FROM Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,10 as SeqNo,1 as MultiSelect
 UNION 
-SELECT 'MenuID' as ValueField,'MenuID' as LabelField,'MenuID' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,1 as IsSysParameter,NULL as ReferenceSource,NULL as Operator,0 as FilterOnly,11 as SeqNo,1 as MultiSelect
+SELECT 'EmployeeCode' as ValueField,'EmployeeCode' as LabelField,'EmployeeCode' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,0 as IsSysParameter,'SELECT distinct EmployeeCode FROM Reports.EmployeePIMSInfo' as ReferenceSource,NULL as Operator,0 as FilterOnly,11 as SeqNo,1 as MultiSelect
 UNION 
-SELECT 'UserID' as ValueField,'UserID' as LabelField,'UserID' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,1 as IsSysParameter,NULL as ReferenceSource,NULL as Operator,0 as FilterOnly,12 as SeqNo,1 as MultiSelect
+SELECT 'MenuID' as ValueField,'MenuID' as LabelField,'MenuID' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,1 as IsSysParameter,NULL as ReferenceSource,NULL as Operator,0 as FilterOnly,12 as SeqNo,1 as MultiSelect
+UNION 
+SELECT 'UserID' as ValueField,'UserID' as LabelField,'UserID' as Label,NULL as DefaultValue,'String' as FieldType,NULL as MapField,1 as IsSysParameter,NULL as ReferenceSource,NULL as Operator,0 as FilterOnly,13 as SeqNo,1 as MultiSelect
 ) A 
 ORDER BY SeqNo ASC
 
