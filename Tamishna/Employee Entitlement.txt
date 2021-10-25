@@ -1,0 +1,13 @@
+CREATE VIEW EmployeeEntitlementInformation
+AS
+SELECT * FROM 
+(
+SELECT A.EntityName,A.EmployeeCode,A.ESID,EmployeeName,Designation,DOJ,Unit,Department,[Section Info],[Employee Category],EmployeeStatus,
+D.EntitlementName,CONVERT(VARCHAR(20),C.EffectiveDate,103) as EffectiveDate
+FROM Reports.EmployeePIMSInfo A
+LEFT JOIN Employee.EntitlementInformation C ON A.ESID = C.ESID
+LEFT JOIN SysInfo.EntitlementMaster D ON C.EntitlementID = D.EntitlementID
+) A 
+PIVOT (
+	MAX(EffectiveDate) FOR EntitlementName IN ([PF],[Insurance],[Gratuity],[Medical],[Over Time],[OffDay Over Time],[CompensatoryOff])
+) PVT

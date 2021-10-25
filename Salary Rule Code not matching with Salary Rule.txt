@@ -1,0 +1,4 @@
+UPDATE PayRoll.EmployeeSalaryInfoMaster SET  SalaryDefinePolicyID = 21102800000001 WHERE SalaryDefinePolicyID = 21100000001
+GO
+TRUNCATE TABLE TempProcess.TempIncrementMasterBack 
+TRUNCATE TABLE TempProcess.TempIncrementDetailBack 

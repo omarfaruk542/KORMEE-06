@@ -1,0 +1,6 @@
+TRUNCATE TABLE Employee.EmployeeYearMappingInfo
+INSERT INTO Employee.EmployeeYearMappingInfo(SystemID, ESID, YearName, YearID)
+SELECT '21'+ CAST(O.EntityID AS VARCHAR) + RIGHT('0000000'+ CAST(ROW_NUMBER() OVER(ORDER BY E.ESID) AS VARCHAR(8)), 8),
+E.ESID, Y.YearName, Y.YearID FROM Employee.EmployeeCodeMaster E
+JOIN Employee.ActiveEmployeeOfficialInfo O ON E.ESID = O.ESID
+CROSS JOIN (SELECT * FROM SysInfo.YearInformationMaster WHERE DefaultYear = 1) Y
