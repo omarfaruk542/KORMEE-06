@@ -1,0 +1,5 @@
+DELETE Duplicate FROM 
+(
+select ROW_NUMBER()OVER(PARTITION BY ESID ORDER BY EffectiveDate DESC) as Seq,* from Employee.SeparationInfo 
+) Duplicate
+WHERE Seq > 1

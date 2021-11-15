@@ -1,0 +1,7 @@
+DELETE Duplicate FROM 
+(
+SELECT ESID,ShiftDate,ShiftID,ShiftType,IsDefault,ProcessSource,
+ROW_NUMBER()OVER(PARTITION BY ESID,ShiftID ORDER BY ESID,IsDefault DESC) SL FROM ShiftManagement.ShiftRoster
+where ShiftDate = '11/13/2021' --and ESID = '21100000002'
+) Duplicate
+WHERE SL > 1 

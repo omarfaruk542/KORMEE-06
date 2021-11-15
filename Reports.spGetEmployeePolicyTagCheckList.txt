@@ -1,0 +1,67 @@
+IF OBJECT_ID('Reports.spGetEmployeePolicyTagCheckList')
+DROP PROC Reports.spGetEmployeePolicyTagCheckList
+GO
+
+CREATE PROC Reports.spGetEmployeePolicyTagCheckList
+as
+begin
+SELECT  E.EntityName,E.EmployeeCode,E.EmployeeName,	E.Designation,SysInfo.FormattedDate(E.DOJ)DOJ,E.Unit, E.Department,E.[Section Info],E.[Employee Category],E.EmployeeStatus, Y.YearName,
+ISNULL(PFE.PF,'')PF, ISNULL(INS.Insurance,'')Insurance , ISNULL(G.Gratuity,'')Gratuity, ISNULL(M.Medical,'')Medical,
+ISNULL(OT.[Over Time],'')[Over Time] ,ISNULL(OFT.[OffDay Over Time],'')AS[OffDay Over Time],ISNULL(COF.[CompensatoryOff],'')AS[CompensatoryOff]
+,E.AttendancePaymentPolicy [Attendance Payment Rule], B.BonusPolicyName AS [Bonus Policy], C.CurrencyRuleName AS [Currency Rule],
+F.PolicyName AS [Final Settlement Policy],CASE WHEN E.ShiftType='Fixed' THEN 'Fixed' ELSE ''  END  AS [Fixed Shift],
+CASE WHEN E.ShiftType='Roster' THEN 'Roster' ELSE ''  END  AS [Roster Shift], I.IncentivePolicyID as [Incentive Policy],
+E.TaxPolicy AS [Income Tax Rule],E.LeavePolicy [Leave Rule],E.MaternityLeavePolicy [Maternity Leave Policy], 
+E.PaternityLeavePolicy as [Paternity Leave Policy], O.ConfigureName AS [OverTime Policy],
+PF.PolicyName AS [Provident Fund Policy], E.SalaryProcessPolicy [Salary Process Policy],
+OS.OtherSalaryRuleName AS [Other Salary Rule]
+FROM Reports.EmployeePIMSInfo E 
+LEFT JOIN Employee.EmployeePolicyTag P ON P.ESID = E.ESID
+LEFT JOIN Attendance.OTCalculationConfigure O ON P.OverTimePolicyID= O.SystemID
+LEFT JOIN PayRoll.ProvidentFundPolicy PF ON P.PFPolicyID= PF.SystemID
+LEFT JOIN PayRoll.SalesIncentivePolicyMaster I on I.IncentivePolicyID =p.IncentivePolicyID
+LEFT JOIN FinalSettlement.FinalSettlementPolicyMaster F ON F.PolicySystemID =P.FinalSettlementPolicyID 
+LEFT JOIN BonusManagement.BonusPolicyMaster B ON B.SystemID =P.BonusPolicyID
+LEFT JOIN PayRoll.CurrencyRuleMaster C ON C.SystemID =P.CurrencyRuleID
+LEFT JOIN (
+SELECT T.ESID, O.OtherSalaryRuleName FROM PayRoll.OtherSalaryRule O
+JOIN PayRoll.OtherSalaryRuleTaggingInfo T ON O.OtherSalaryRuleID=T.OtherSalaryRuleID
+)OS ON OS.ESID =E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS PF from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=1
+)PFE ON PFE.ESID = E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS Insurance from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=2
+)INS ON INS.ESID = E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS Gratuity from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=3
+)G ON G.ESID = E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS Medical from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=4
+)M ON M.ESID = E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS [Over Time] from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=5
+)OT ON OT.ESID = E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS [OffDay Over Time] from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=6
+)OFT ON OFT.ESID = E.ESID
+LEFT JOIN(
+SELECT DISTINCT EN.ESID, EM.EntitlementName AS [CompensatoryOff] from Employee.EntitlementInformation EN
+JOIN SysInfo.EntitlementMaster  EM ON EM.EntitlementID =EN.EntitlementID 
+WHERE EN.EntitlementID=7
+)COF ON COF.ESID = E.ESID
+LEFT JOIN Employee.EmployeeYearMappingInfo Y ON Y.ESID=E.ESID AND YearName='Salary Year'
+WHERE EmployeeStatus='Active'
+end
